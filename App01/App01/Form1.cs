@@ -11,6 +11,13 @@ namespace App01
         {
 
         }
-
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                btnLogin.PerformClick();
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }
