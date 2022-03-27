@@ -16,7 +16,7 @@ namespace App01
             for (int i = 0; i < defaultUsernames.Length; i++){
                 if ((defaultUsernames[i] == txtUsernameEntry.Text) && (defaultPasswds[i] == txtPasswordEntry.Text)) {
                     loginFlag = true;
-                    
+                    break;
                 }
             }
 
