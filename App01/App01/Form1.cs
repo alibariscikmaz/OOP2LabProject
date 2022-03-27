@@ -22,7 +22,9 @@ namespace App01
 
             if (loginFlag)
             {
-                // ---------- This part will lead to the main menu part --------------------
+                this.Hide();
+                Form2 form2 = new Form2();
+                form2.Visible = true;
             }
 
             else
@@ -37,6 +39,16 @@ namespace App01
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void txtUsernameEntry_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

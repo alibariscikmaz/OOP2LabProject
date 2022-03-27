@@ -46,6 +46,7 @@
             this.txtUsernameEntry.PlaceholderText = "e.g. astroBoy22";
             this.txtUsernameEntry.Size = new System.Drawing.Size(665, 71);
             this.txtUsernameEntry.TabIndex = 0;
+            this.txtUsernameEntry.TextChanged += new System.EventHandler(this.txtUsernameEntry_TextChanged);
             // 
             // txtPasswordEntry
             // 
@@ -107,6 +108,7 @@
             this.Controls.Add(this.txtUsernameEntry);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
