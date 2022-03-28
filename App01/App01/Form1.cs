@@ -22,9 +22,8 @@ namespace App01
 
             if (loginFlag)
             {
-                this.Hide();
                 Form2 form2 = new Form2();
-                form2.Visible = true;
+                form2.ShowDialog();
             }
 
             else
