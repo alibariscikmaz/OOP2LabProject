@@ -94,7 +94,7 @@ namespace App01
                 txta.Close();
             }
 
-            StreamReader txtb = new StreamReader(currentpath + "\\config.txt");
+            StreamReader txt = new StreamReader(currentpath + "\\config.txt");
 
             while (!txt.EndOfStream)
             {
