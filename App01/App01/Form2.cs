@@ -82,6 +82,13 @@ namespace App01
             if (checkedListBox1.GetItemCheckState(2) == CheckState.Checked) txt.WriteLine("Circle");
             else txt.WriteLine("empty");
 
+            if (checkedListBox2.GetItemCheckState(0) == CheckState.Checked) txt.WriteLine("Red");
+            else txt.WriteLine("empty");
+            if (checkedListBox2.GetItemCheckState(1) == CheckState.Checked) txt.WriteLine("Green");
+            else txt.WriteLine("empty");
+            if (checkedListBox2.GetItemCheckState(2) == CheckState.Checked) txt.WriteLine("Blue");
+            else txt.WriteLine("empty");
+
             txt.Close();
             
         }
@@ -117,7 +124,10 @@ namespace App01
                 if (txt.ReadLine() == "Square") checkedListBox1.SetItemChecked(0,true);
                 if (txt.ReadLine() == "Triangle") checkedListBox1.SetItemChecked(1, true);
                 if (txt.ReadLine() == "Circle") checkedListBox1.SetItemChecked(2, true);
-                
+
+                if(txt.ReadLine() == "Red") checkedListBox2.SetItemChecked(0, true);
+                if (txt.ReadLine() == "Green") checkedListBox2.SetItemChecked(1, true);
+                if (txt.ReadLine() == "Blue") checkedListBox2.SetItemChecked(2, true);
 
             }
             txt.Close();
@@ -135,6 +145,11 @@ namespace App01
                 numericUpDown1.Visible = false;
                 numericUpDown2.Visible = false;
             }
+        }
+
+        private void checkedListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
