@@ -17,11 +17,11 @@ namespace App01
         {
             InitializeComponent();
             config();
+
         }
         
         private void Form2_Load(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -88,7 +88,14 @@ namespace App01
         private void config()
         {
             string currentpath = System.IO.Directory.GetCurrentDirectory();
-            StreamReader txt = new StreamReader(currentpath + "\\config.txt");
+            if (!File.Exists(currentpath + "\\config.txt"))
+            {
+                StreamWriter txta = new StreamWriter(currentpath + "\\config.txt");
+                txta.Close();
+            }
+
+            StreamReader txtb = new StreamReader(currentpath + "\\config.txt");
+
             while (!txt.EndOfStream)
             {
                 if (txt.ReadLine() == "Hard") radioButton1.Checked = true;
