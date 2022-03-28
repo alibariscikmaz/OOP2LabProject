@@ -16,15 +16,15 @@ namespace App01
         public Form2()
         {
             InitializeComponent();
-            config();
-
+            config(); // check save file and create if it doesn't exist
         }
         
         private void Form2_Load(object sender, EventArgs e)
         {
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void settingsbutton_Click(object sender, EventArgs e) // settings button click event
         {
             
             if (panel1.Visible == false)
@@ -37,25 +37,15 @@ namespace App01
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+
+        private void button1_Click_1(object sender, EventArgs e) // save button click event
         {
+            label1.Visible = true; // save successful text
 
-        }
-
-        
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            label1.Visible = true;
-            
             //gets project's \bin\debug directory
             string currentpath = System.IO.Directory.GetCurrentDirectory();
-            StreamWriter txt = new StreamWriter(currentpath+"\\config.txt");
+            StreamWriter txt = new StreamWriter(currentpath + "\\config.txt");
+
             if (radioButton1.Checked) txt.WriteLine("Hard");
             else txt.WriteLine("empty");
             if (radioButton2.Checked) txt.WriteLine("Normal");

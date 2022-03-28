@@ -59,7 +59,7 @@
             this.settingsbutton.TabIndex = 0;
             this.settingsbutton.Text = "Settings";
             this.settingsbutton.UseVisualStyleBackColor = true;
-            this.settingsbutton.Click += new System.EventHandler(this.button1_Click);
+            this.settingsbutton.Click += new System.EventHandler(this.settingsbutton_Click);
             // 
             // panel1
             // 
@@ -73,7 +73,6 @@
             this.panel1.Size = new System.Drawing.Size(681, 416);
             this.panel1.TabIndex = 1;
             this.panel1.Visible = false;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label1
             // 
