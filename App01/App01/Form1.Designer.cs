@@ -33,6 +33,7 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
+            this.seepw = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUsernameEntry
@@ -43,10 +44,10 @@
             this.txtUsernameEntry.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.txtUsernameEntry.Location = new System.Drawing.Point(172, 200);
             this.txtUsernameEntry.Name = "txtUsernameEntry";
-            this.txtUsernameEntry.PlaceholderText = "e.g. astroBoy22";
+            this.txtUsernameEntry.PlaceholderText = "e.g. astroBoy";
             this.txtUsernameEntry.Size = new System.Drawing.Size(665, 71);
             this.txtUsernameEntry.TabIndex = 0;
-            this.txtUsernameEntry.TextChanged += new System.EventHandler(this.txtUsernameEntry_TextChanged);
+            this.txtUsernameEntry.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsernameEntry_KeyPress);
             // 
             // txtPasswordEntry
             // 
@@ -95,12 +96,23 @@
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Your password";
             // 
+            // seepw
+            // 
+            this.seepw.Location = new System.Drawing.Point(868, 373);
+            this.seepw.Name = "seepw";
+            this.seepw.Size = new System.Drawing.Size(73, 48);
+            this.seepw.TabIndex = 5;
+            this.seepw.Text = "see password";
+            this.seepw.UseVisualStyleBackColor = true;
+            this.seepw.Click += new System.EventHandler(this.seepw_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(164)))), ((int)(((byte)(188)))));
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.seepw);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.btnLogin);
@@ -121,5 +133,6 @@
         private Button btnLogin;
         private Label lblUsername;
         private Label lblPassword;
+        private Button seepw;
     }
 }
