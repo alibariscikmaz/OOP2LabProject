@@ -1,3 +1,5 @@
+using System;
+using System.Windows.Forms;
 namespace App01
 {
     public partial class Form1 : Form
@@ -40,14 +42,22 @@ namespace App01
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void txtUsernameEntry_TextChanged(object sender, EventArgs e)
+        private void txtUsernameEntry_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void seepw_Click(object sender, EventArgs e)
+        {
+            if (txtPasswordEntry.PasswordChar == '*')
+                txtPasswordEntry.PasswordChar = '\0';
+            else
+                txtPasswordEntry.PasswordChar = '*';
         }
     }
 }
