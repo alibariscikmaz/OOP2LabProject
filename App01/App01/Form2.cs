@@ -27,13 +27,8 @@ namespace App01
         private void settingsbutton_Click(object sender, EventArgs e) // settings button click event
         {
             
-            if (panel1.Visible == false)
-            {
-                panel1.Visible = true;
-
-            }
-
-            else panel1.Visible = false;
+            settingsScreen settings = new settingsScreen();
+            settings.Show();
 
         }
 
