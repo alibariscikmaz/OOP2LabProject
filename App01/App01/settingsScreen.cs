@@ -16,6 +16,7 @@ namespace App01
         public settingsScreen()
         {
             InitializeComponent();
+            loadOptions();
         }
 
         private void settingsScreen_Load(object sender, EventArgs e)
@@ -67,8 +68,116 @@ namespace App01
                 settingsConfig.WriteElementString("checkedColor" + i, chklbxColor.CheckedItems[i].ToString());
             }
 
+            // Close xml file after writing
             settingsConfig.WriteEndElement();
             settingsConfig.Close();
+            lbSaveSuccessful.Visible = true;
+        }
+        private void loadOptions()
+        {
+            // Open the saved settings xml file
+            int checkedShapeCount = 0, checkedColorCount = 0;
+            XmlTextReader reader = new XmlTextReader("settingsconfig.xml");
+
+            // Start reading
+            while(reader.Read())
+            {
+                // Read only elements
+                if(reader.NodeType == XmlNodeType.Element)
+                {
+                    // If element name is difficulty, load the saved difficulty
+                    if (reader.Name == "difficulty")
+                    {
+                        string difficultyValue = reader.ReadString().ToString();
+                        if (difficultyValue == rbtnEasy.Text)
+                            rbtnEasy.Checked = true;
+                        if (difficultyValue == rbtnNormal.Text)
+                            rbtnNormal.Checked = true;
+                        if (difficultyValue == rbtnHard.Text)
+                            rbtnHard.Checked = true;
+                        if (difficultyValue == rbtnCustom.Text)
+                            rbtnCustom.Checked = true;
+                    }
+                    
+                    // If difficulty is custom, load the saved axis'
+                    if (reader.Name == "xAxis")
+                    {
+                        string xValue = reader.ReadString().ToString();
+                        if (rbtnCustom.Checked)
+                        {
+                           nmrcudXAxis.Text = xValue;
+                        }
+                    }
+
+                    if (reader.Name == "yAxis")
+                    {
+                        string yValue = reader.ReadString().ToString();
+                        if (rbtnCustom.Checked)
+                        {
+                            nmrcudYAxis.Text = yValue;
+                        }
+                    }
+
+                    // Get shapeCount for the loop of controlling checked shape elements
+                    if (reader.Name == "shapeCount") 
+                        checkedShapeCount = Int32.Parse(reader.ReadString().ToString());
+
+                    // Load checked shape elements in a loop
+                    for (int i = 0; i < checkedShapeCount; i++)
+                    {
+                        if (reader.Name == "checkedShape" + i)
+                        {
+                            string shapeName = reader.ReadString().ToString();
+                            if (shapeName == "Square")
+                                chklbxShape.SetItemChecked(0, true);
+                            if (shapeName == "Triangle")
+                                chklbxShape.SetItemChecked(1, true);
+                            if (shapeName == "Circle")
+                                chklbxShape.SetItemChecked(2, true);
+                        }
+                    }
+
+                    // Get colorCount for the loop of controlling checked color elements
+                    if (reader.Name == "colorCount")
+                        checkedColorCount = Int32.Parse(reader.ReadString().ToString());
+
+                    // Load checked color elements in a loop
+                    for (int i = 0; i < checkedColorCount; i++)
+                    {
+                        if (reader.Name == "checkedColor" + i)
+                        {
+                            string shapeName = reader.ReadString().ToString();
+                            if (shapeName == "Red")
+                                chklbxColor.SetItemChecked(0, true);
+                            if (shapeName == "Green")
+                                chklbxColor.SetItemChecked(1, true);
+                            if (shapeName == "Blue")
+                                chklbxColor.SetItemChecked(2, true);
+                        }
+                    }
+                }
+            }
+            // Close xml file after reading
+            reader.Close();
+        }
+
+        private void rbtnCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnCustom.Checked)
+            {
+                nmrcudXAxis.Visible = true;
+                nmrcudYAxis.Visible = true;
+            }
+            else
+            {
+                nmrcudXAxis.Visible = false;
+                nmrcudYAxis.Visible = false;
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
