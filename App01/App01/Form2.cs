@@ -34,5 +34,12 @@ namespace App01
             adminpanel admin = new adminpanel();
             admin.ShowDialog();
         }
+
+        private void btnAboutUs_Click(object sender, EventArgs e)
+        {
+            aboutScreen aboutUs = new aboutScreen();
+            aboutUs.ShowDialog();
+            aboutUs.TopMost = true;
+        }
     }
 }

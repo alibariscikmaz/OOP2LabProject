@@ -33,13 +33,15 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnAdmin = new System.Windows.Forms.Button();
+            this.btnAboutUs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // settingsbutton
             // 
-            this.settingsbutton.Location = new System.Drawing.Point(713, 12);
+            this.settingsbutton.Location = new System.Drawing.Point(815, 16);
+            this.settingsbutton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.settingsbutton.Name = "settingsbutton";
-            this.settingsbutton.Size = new System.Drawing.Size(75, 54);
+            this.settingsbutton.Size = new System.Drawing.Size(86, 72);
             this.settingsbutton.TabIndex = 0;
             this.settingsbutton.Text = "Settings";
             this.settingsbutton.UseVisualStyleBackColor = true;
@@ -53,21 +55,34 @@
             // 
             // btnAdmin
             // 
-            this.btnAdmin.Location = new System.Drawing.Point(713, 72);
+            this.btnAdmin.Location = new System.Drawing.Point(815, 96);
+            this.btnAdmin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAdmin.Name = "btnAdmin";
-            this.btnAdmin.Size = new System.Drawing.Size(75, 66);
+            this.btnAdmin.Size = new System.Drawing.Size(86, 88);
             this.btnAdmin.TabIndex = 1;
             this.btnAdmin.Text = "Admin Panel";
             this.btnAdmin.UseVisualStyleBackColor = true;
             this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
             // 
+            // btnAboutUs
+            // 
+            this.btnAboutUs.Location = new System.Drawing.Point(816, 191);
+            this.btnAboutUs.Name = "btnAboutUs";
+            this.btnAboutUs.Size = new System.Drawing.Size(86, 72);
+            this.btnAboutUs.TabIndex = 2;
+            this.btnAboutUs.Text = "About Us";
+            this.btnAboutUs.UseVisualStyleBackColor = true;
+            this.btnAboutUs.Click += new System.EventHandler(this.btnAboutUs_Click);
+            // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(914, 600);
+            this.Controls.Add(this.btnAboutUs);
             this.Controls.Add(this.btnAdmin);
             this.Controls.Add(this.settingsbutton);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainMenu";
             this.Text = "Main Menu";
             this.Load += new System.EventHandler(this.Form2_Load);
@@ -81,5 +96,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ContextMenuStrip contextMenuStrip1;
         private Button btnAdmin;
+        private Button btnAboutUs;
     }
 }
