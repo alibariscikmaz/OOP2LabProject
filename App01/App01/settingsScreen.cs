@@ -75,10 +75,21 @@ namespace App01
         }
         private void loadOptions()
         {
+            string currentpath = System.IO.Directory.GetCurrentDirectory();
+
+            if (!File.Exists(currentpath + "\\settingsconfig.xml"))
+            {
+                XmlTextWriter writer = new XmlTextWriter("settingsconfig.xml", Encoding.UTF8);
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartDocument();
+                writer.WriteStartElement("savedSettings");
+                writer.Close();
+            }
+
             // Open the saved settings xml file
             int checkedShapeCount = 0, checkedColorCount = 0;
             XmlTextReader reader = new XmlTextReader("settingsconfig.xml");
-
+            
             // Start reading
             while(reader.Read())
             {
