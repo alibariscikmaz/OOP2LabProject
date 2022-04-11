@@ -23,7 +23,20 @@ namespace App01
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            bool adminFlag = false;
             bool loginFlag = false;
+            if (txtUsernameEntry.Text == "admin" && txtPasswordEntry.Text == "admin") {
+                loginFlag = true;
+                adminFlag = true;
+            } 
+            string currentpath = System.IO.Directory.GetCurrentDirectory();
+            if (!File.Exists(currentpath + "\\userInfo.xml"))
+            {
+                XDocument doc = new XDocument(
+                    new XElement("Users"));
+                doc.Save(currentpath + "\\userInfo.xml");
+            }
+            
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load("userInfo.xml");
             XmlNodeList nodeList = xmlDoc.DocumentElement.SelectNodes("/Users/User");

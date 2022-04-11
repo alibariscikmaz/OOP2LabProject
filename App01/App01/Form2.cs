@@ -28,5 +28,11 @@ namespace App01
             settingsScreen settings = new settingsScreen();
             settings.ShowDialog();
         }
+
+        private void btnAdmin_Click(object sender, EventArgs e)
+        {
+            adminpanel admin = new adminpanel();
+            admin.ShowDialog();
+        }
     }
 }
