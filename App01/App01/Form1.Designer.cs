@@ -34,6 +34,7 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.seepw = new System.Windows.Forms.Button();
+            this.btnSignUp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUsernameEntry
@@ -66,7 +67,7 @@
             this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(125)))), ((int)(((byte)(177)))));
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(19)))), ((int)(((byte)(47)))));
-            this.btnLogin.Location = new System.Drawing.Point(357, 502);
+            this.btnLogin.Location = new System.Drawing.Point(172, 511);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(294, 100);
             this.btnLogin.TabIndex = 2;
@@ -106,12 +107,26 @@
             this.seepw.UseVisualStyleBackColor = true;
             this.seepw.Click += new System.EventHandler(this.seepw_Click);
             // 
+            // btnSignUp
+            // 
+            this.btnSignUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(125)))), ((int)(((byte)(177)))));
+            this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSignUp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(19)))), ((int)(((byte)(47)))));
+            this.btnSignUp.Location = new System.Drawing.Point(543, 511);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(294, 100);
+            this.btnSignUp.TabIndex = 6;
+            this.btnSignUp.Text = "Sign Up";
+            this.btnSignUp.UseVisualStyleBackColor = false;
+            this.btnSignUp.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(164)))), ((int)(((byte)(188)))));
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.seepw);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
@@ -134,5 +149,6 @@
         private Label lblUsername;
         private Label lblPassword;
         private Button seepw;
+        private Button btnSignUp;
     }
 }

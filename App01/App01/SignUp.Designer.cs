@@ -44,6 +44,7 @@
             this.lbCountry = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lbAddress = new System.Windows.Forms.Label();
+            this.btnSignUp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUsername
@@ -182,11 +183,23 @@
             this.lbAddress.TabIndex = 15;
             this.lbAddress.Text = "Address";
             // 
+            // btnSignUp
+            // 
+            this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSignUp.Location = new System.Drawing.Point(223, 408);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(137, 46);
+            this.btnSignUp.TabIndex = 16;
+            this.btnSignUp.Text = "Sign Up";
+            this.btnSignUp.UseVisualStyleBackColor = true;
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
+            // 
             // signUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 486);
+            this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.lbAddress);
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.lbCountry);
@@ -228,5 +241,6 @@
         private Label lbCountry;
         private TextBox txtAddress;
         private Label lbAddress;
+        private Button btnSignUp;
     }
 }
