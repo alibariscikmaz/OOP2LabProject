@@ -1,5 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Security.Cryptography;
+
+
 namespace App01
 {
     public partial class Form1 : Form
@@ -11,16 +23,21 @@ namespace App01
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var defaultUsernames = new[] { "admin", "user" };
-            var defaultPasswds = new[] { "admin", "user" };
             bool loginFlag = false;
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("userInfo.xml");
+            XmlNodeList nodeList = xmlDoc.DocumentElement.SelectNodes("/Users/User");
 
-            for (int i = 0; i < defaultUsernames.Length; i++){
-                if ((defaultUsernames[i] == txtUsernameEntry.Text) && (defaultPasswds[i] == txtPasswordEntry.Text)) {
+            foreach (XmlNode node in nodeList)
+            {
+                if (node.SelectSingleNode("username").InnerText == txtUsernameEntry.Text && 
+                    node.SelectSingleNode("password").InnerText == toSHA256(txtPasswordEntry.Text))
+                {
                     loginFlag = true;
-                    break;
                 }
             }
+
+
 
             if (loginFlag)
             {
@@ -64,6 +81,19 @@ namespace App01
         {
             signUp signform = new signUp();
             signform.Show();
+        }
+        public static string toSHA256(string s)
+        {
+            using var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
+
         }
     }
 }
