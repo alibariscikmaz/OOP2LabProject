@@ -24,8 +24,8 @@ namespace App01
 
             if (loginFlag)
             {
-                Form2 form2 = new Form2();
-                form2.ShowDialog();
+                MainMenu form2 = new MainMenu();
+                form2.Show();
             }
 
             else

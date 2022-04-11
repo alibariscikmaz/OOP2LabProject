@@ -40,6 +40,7 @@
             this.grpbxColor = new System.Windows.Forms.GroupBox();
             this.chklbxColor = new System.Windows.Forms.CheckedListBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.lbSaveSuccessful = new System.Windows.Forms.Label();
             this.grpbxDifficulty.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmrcudYAxis)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmrcudXAxis)).BeginInit();
@@ -69,6 +70,7 @@
             this.nmrcudYAxis.Name = "nmrcudYAxis";
             this.nmrcudYAxis.Size = new System.Drawing.Size(73, 23);
             this.nmrcudYAxis.TabIndex = 5;
+            this.nmrcudYAxis.Visible = false;
             // 
             // nmrcudXAxis
             // 
@@ -76,6 +78,7 @@
             this.nmrcudXAxis.Name = "nmrcudXAxis";
             this.nmrcudXAxis.Size = new System.Drawing.Size(73, 23);
             this.nmrcudXAxis.TabIndex = 4;
+            this.nmrcudXAxis.Visible = false;
             // 
             // rbtnCustom
             // 
@@ -87,6 +90,7 @@
             this.rbtnCustom.TabStop = true;
             this.rbtnCustom.Text = "Custom";
             this.rbtnCustom.UseVisualStyleBackColor = true;
+            this.rbtnCustom.CheckedChanged += new System.EventHandler(this.rbtnCustom_CheckedChanged);
             // 
             // rbtnHard
             // 
@@ -174,13 +178,24 @@
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(194)))), ((int)(((byte)(255)))));
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(142, 431);
+            this.btnSave.Location = new System.Drawing.Point(150, 426);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(167, 55);
+            this.btnSave.Size = new System.Drawing.Size(151, 44);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lbSaveSuccessful
+            // 
+            this.lbSaveSuccessful.AutoSize = true;
+            this.lbSaveSuccessful.Location = new System.Drawing.Point(142, 475);
+            this.lbSaveSuccessful.Name = "lbSaveSuccessful";
+            this.lbSaveSuccessful.Size = new System.Drawing.Size(167, 15);
+            this.lbSaveSuccessful.TabIndex = 4;
+            this.lbSaveSuccessful.Text = "Settings are successfuly saved.";
+            this.lbSaveSuccessful.Visible = false;
+            this.lbSaveSuccessful.Click += new System.EventHandler(this.label1_Click);
             // 
             // settingsScreen
             // 
@@ -188,6 +203,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(225)))), ((int)(((byte)(230)))));
             this.ClientSize = new System.Drawing.Size(451, 499);
+            this.Controls.Add(this.lbSaveSuccessful);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.grpbxColor);
             this.Controls.Add(this.grpbxShape);
@@ -202,6 +218,7 @@
             this.grpbxShape.ResumeLayout(false);
             this.grpbxColor.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -219,5 +236,6 @@
         private GroupBox grpbxColor;
         private CheckedListBox chklbxColor;
         private Button btnSave;
+        private Label lbSaveSuccessful;
     }
 }
