@@ -32,9 +32,9 @@ namespace App01
             int userCount = getUserCount();
 
                 XDocument doc = XDocument.Load(currentpath + "\\userInfo.xml");
-            var newElement = new XElement("User" + userCount.ToString(),
+            var newElement = new XElement("User",
                  new XElement("username", txtUsername.Text),
-                 new XElement("password", txtPassword.Text),
+                 new XElement("password", toSHA256(txtPassword.Text)),
                  new XElement("email", txtEmail.Text),
                  new XElement("phone", txtPhoneNumber.Text),
                  new XElement("name", txtNameSurname.Text),
@@ -81,6 +81,19 @@ namespace App01
                     new XElement("Users"));
                 doc.Save(currentpath + "\\userInfo.xml");
             }
+        }
+        public static string toSHA256(string s)
+        {
+            using var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return sb.ToString();  
+            
         }
 
     }
