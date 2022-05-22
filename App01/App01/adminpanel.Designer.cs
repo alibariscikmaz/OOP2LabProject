@@ -49,6 +49,7 @@
             this.txtCountry = new System.Windows.Forms.TextBox();
             this.txtCity = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.lbEmptyFieldError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // selectUserBox
@@ -77,6 +78,7 @@
             this.addUserbttn.TabIndex = 2;
             this.addUserbttn.Text = "Add New User";
             this.addUserbttn.UseVisualStyleBackColor = true;
+            this.addUserbttn.Click += new System.EventHandler(this.addUserbttn_Click);
             // 
             // updateBttn
             // 
@@ -96,6 +98,7 @@
             this.deleteBttn.TabIndex = 4;
             this.deleteBttn.Text = "Delete User";
             this.deleteBttn.UseVisualStyleBackColor = true;
+            this.deleteBttn.Click += new System.EventHandler(this.deleteBttn_Click);
             // 
             // label2
             // 
@@ -171,6 +174,7 @@
             // 
             // txtUsername
             // 
+            this.txtUsername.Enabled = false;
             this.txtUsername.Location = new System.Drawing.Point(33, 152);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(151, 23);
@@ -225,11 +229,24 @@
             this.txtName.Size = new System.Drawing.Size(151, 23);
             this.txtName.TabIndex = 17;
             // 
+            // lbEmptyFieldError
+            // 
+            this.lbEmptyFieldError.AutoSize = true;
+            this.lbEmptyFieldError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbEmptyFieldError.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbEmptyFieldError.Location = new System.Drawing.Point(33, 419);
+            this.lbEmptyFieldError.Name = "lbEmptyFieldError";
+            this.lbEmptyFieldError.Size = new System.Drawing.Size(327, 15);
+            this.lbEmptyFieldError.TabIndex = 21;
+            this.lbEmptyFieldError.Text = "One or more fields are empty, cannot perform the action!";
+            this.lbEmptyFieldError.Visible = false;
+            // 
             // adminpanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbEmptyFieldError);
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.txtCountry);
             this.Controls.Add(this.txtCity);
@@ -281,5 +298,6 @@
         private TextBox txtCountry;
         private TextBox txtCity;
         private TextBox txtName;
+        private Label lbEmptyFieldError;
     }
 }
