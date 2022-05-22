@@ -48,6 +48,7 @@
             this.txtUsernameEntry.PlaceholderText = "e.g. astroBoy";
             this.txtUsernameEntry.Size = new System.Drawing.Size(665, 71);
             this.txtUsernameEntry.TabIndex = 0;
+            this.txtUsernameEntry.TextChanged += new System.EventHandler(this.txtUsernameEntry_TextChanged);
             this.txtUsernameEntry.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsernameEntry_KeyPress);
             // 
             // txtPasswordEntry
@@ -102,7 +103,7 @@
             this.seepw.Location = new System.Drawing.Point(868, 373);
             this.seepw.Name = "seepw";
             this.seepw.Size = new System.Drawing.Size(73, 48);
-            this.seepw.TabIndex = 5;
+            this.seepw.TabIndex = 4;
             this.seepw.Text = "see password";
             this.seepw.UseVisualStyleBackColor = true;
             this.seepw.Click += new System.EventHandler(this.seepw_Click);
@@ -115,7 +116,7 @@
             this.btnSignUp.Location = new System.Drawing.Point(543, 511);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(294, 100);
-            this.btnSignUp.TabIndex = 6;
+            this.btnSignUp.TabIndex = 3;
             this.btnSignUp.Text = "Sign Up";
             this.btnSignUp.UseVisualStyleBackColor = false;
             this.btnSignUp.Click += new System.EventHandler(this.button1_Click);
@@ -134,7 +135,7 @@
             this.Controls.Add(this.txtPasswordEntry);
             this.Controls.Add(this.txtUsernameEntry);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Login";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

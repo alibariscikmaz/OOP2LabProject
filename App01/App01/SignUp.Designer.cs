@@ -45,6 +45,15 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lbAddress = new System.Windows.Forms.Label();
             this.btnSignUp = new System.Windows.Forms.Button();
+            this.lbUsernameEmpty = new System.Windows.Forms.Label();
+            this.lbPasswordEmpty = new System.Windows.Forms.Label();
+            this.lbEmailEmpty = new System.Windows.Forms.Label();
+            this.lbPhoneEmpty = new System.Windows.Forms.Label();
+            this.lbNameEmpty = new System.Windows.Forms.Label();
+            this.lbCityEmpty = new System.Windows.Forms.Label();
+            this.lbCountryEmpty = new System.Windows.Forms.Label();
+            this.lbAddressEmpty = new System.Windows.Forms.Label();
+            this.lbSignSuccess = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtUsername
@@ -54,6 +63,8 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(265, 33);
             this.txtUsername.TabIndex = 0;
+            this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
+            this.txtUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsername_KeyPress_1);
             // 
             // txtPassword
             // 
@@ -87,7 +98,7 @@
             this.txtEmail.Location = new System.Drawing.Point(12, 143);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(265, 33);
-            this.txtEmail.TabIndex = 4;
+            this.txtEmail.TabIndex = 2;
             // 
             // lbEmail
             // 
@@ -104,7 +115,7 @@
             this.txtNameSurname.Location = new System.Drawing.Point(9, 240);
             this.txtNameSurname.Name = "txtNameSurname";
             this.txtNameSurname.Size = new System.Drawing.Size(265, 33);
-            this.txtNameSurname.TabIndex = 6;
+            this.txtNameSurname.TabIndex = 4;
             // 
             // lbNameSurname
             // 
@@ -121,7 +132,7 @@
             this.txtPhoneNumber.Location = new System.Drawing.Point(308, 143);
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(265, 33);
-            this.txtPhoneNumber.TabIndex = 8;
+            this.txtPhoneNumber.TabIndex = 3;
             // 
             // lbPhoneNumber
             // 
@@ -138,7 +149,7 @@
             this.txtCity.Location = new System.Drawing.Point(308, 240);
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(265, 33);
-            this.txtCity.TabIndex = 10;
+            this.txtCity.TabIndex = 5;
             // 
             // lbCity
             // 
@@ -155,7 +166,7 @@
             this.txtCountry.Location = new System.Drawing.Point(9, 328);
             this.txtCountry.Name = "txtCountry";
             this.txtCountry.Size = new System.Drawing.Size(265, 33);
-            this.txtCountry.TabIndex = 12;
+            this.txtCountry.TabIndex = 6;
             // 
             // lbCountry
             // 
@@ -172,7 +183,7 @@
             this.txtAddress.Location = new System.Drawing.Point(308, 328);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(265, 33);
-            this.txtAddress.TabIndex = 14;
+            this.txtAddress.TabIndex = 7;
             // 
             // lbAddress
             // 
@@ -189,16 +200,126 @@
             this.btnSignUp.Location = new System.Drawing.Point(223, 408);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(137, 46);
-            this.btnSignUp.TabIndex = 16;
+            this.btnSignUp.TabIndex = 8;
             this.btnSignUp.Text = "Sign Up";
             this.btnSignUp.UseVisualStyleBackColor = true;
             this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
+            // 
+            // lbUsernameEmpty
+            // 
+            this.lbUsernameEmpty.AutoSize = true;
+            this.lbUsernameEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbUsernameEmpty.Location = new System.Drawing.Point(12, 82);
+            this.lbUsernameEmpty.Name = "lbUsernameEmpty";
+            this.lbUsernameEmpty.Size = new System.Drawing.Size(163, 15);
+            this.lbUsernameEmpty.TabIndex = 17;
+            this.lbUsernameEmpty.Text = "Username cannot be empty.";
+            this.lbUsernameEmpty.Visible = false;
+            // 
+            // lbPasswordEmpty
+            // 
+            this.lbPasswordEmpty.AutoSize = true;
+            this.lbPasswordEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbPasswordEmpty.Location = new System.Drawing.Point(308, 82);
+            this.lbPasswordEmpty.Name = "lbPasswordEmpty";
+            this.lbPasswordEmpty.Size = new System.Drawing.Size(158, 15);
+            this.lbPasswordEmpty.TabIndex = 18;
+            this.lbPasswordEmpty.Text = "Password cannot be empty.";
+            this.lbPasswordEmpty.Visible = false;
+            // 
+            // lbEmailEmpty
+            // 
+            this.lbEmailEmpty.AutoSize = true;
+            this.lbEmailEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbEmailEmpty.Location = new System.Drawing.Point(12, 179);
+            this.lbEmailEmpty.Name = "lbEmailEmpty";
+            this.lbEmailEmpty.Size = new System.Drawing.Size(180, 15);
+            this.lbEmailEmpty.TabIndex = 19;
+            this.lbEmailEmpty.Text = "Email address cannot be empty.";
+            this.lbEmailEmpty.Visible = false;
+            // 
+            // lbPhoneEmpty
+            // 
+            this.lbPhoneEmpty.AutoSize = true;
+            this.lbPhoneEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbPhoneEmpty.Location = new System.Drawing.Point(308, 179);
+            this.lbPhoneEmpty.Name = "lbPhoneEmpty";
+            this.lbPhoneEmpty.Size = new System.Drawing.Size(188, 15);
+            this.lbPhoneEmpty.TabIndex = 20;
+            this.lbPhoneEmpty.Text = "Phone number cannot be empty.";
+            this.lbPhoneEmpty.Visible = false;
+            // 
+            // lbNameEmpty
+            // 
+            this.lbNameEmpty.AutoSize = true;
+            this.lbNameEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbNameEmpty.Location = new System.Drawing.Point(9, 276);
+            this.lbNameEmpty.Name = "lbNameEmpty";
+            this.lbNameEmpty.Size = new System.Drawing.Size(213, 15);
+            this.lbNameEmpty.TabIndex = 21;
+            this.lbNameEmpty.Text = "Name and surname cannot be empty.";
+            this.lbNameEmpty.Visible = false;
+            // 
+            // lbCityEmpty
+            // 
+            this.lbCityEmpty.AutoSize = true;
+            this.lbCityEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbCityEmpty.Location = new System.Drawing.Point(308, 276);
+            this.lbCityEmpty.Name = "lbCityEmpty";
+            this.lbCityEmpty.Size = new System.Drawing.Size(127, 15);
+            this.lbCityEmpty.TabIndex = 22;
+            this.lbCityEmpty.Text = "City cannot be empty.";
+            this.lbCityEmpty.Visible = false;
+            // 
+            // lbCountryEmpty
+            // 
+            this.lbCountryEmpty.AutoSize = true;
+            this.lbCountryEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbCountryEmpty.Location = new System.Drawing.Point(9, 364);
+            this.lbCountryEmpty.Name = "lbCountryEmpty";
+            this.lbCountryEmpty.Size = new System.Drawing.Size(150, 15);
+            this.lbCountryEmpty.TabIndex = 23;
+            this.lbCountryEmpty.Text = "Country cannot be empty.";
+            this.lbCountryEmpty.Visible = false;
+            // 
+            // lbAddressEmpty
+            // 
+            this.lbAddressEmpty.AutoSize = true;
+            this.lbAddressEmpty.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbAddressEmpty.Location = new System.Drawing.Point(308, 364);
+            this.lbAddressEmpty.Name = "lbAddressEmpty";
+            this.lbAddressEmpty.Size = new System.Drawing.Size(150, 15);
+            this.lbAddressEmpty.TabIndex = 24;
+            this.lbAddressEmpty.Text = "Address cannot be empty.";
+            this.lbAddressEmpty.Visible = false;
+            // 
+            // lbSignSuccess
+            // 
+            this.lbSignSuccess.AutoSize = true;
+            this.lbSignSuccess.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbSignSuccess.ForeColor = System.Drawing.Color.Green;
+            this.lbSignSuccess.Location = new System.Drawing.Point(224, 457);
+            this.lbSignSuccess.Name = "lbSignSuccess";
+            this.lbSignSuccess.Size = new System.Drawing.Size(134, 15);
+            this.lbSignSuccess.TabIndex = 25;
+            this.lbSignSuccess.Text = "Signed up successfully!";
+            this.lbSignSuccess.Visible = false;
+            this.lbSignSuccess.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // signUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 486);
+            this.Controls.Add(this.lbSignSuccess);
+            this.Controls.Add(this.lbAddressEmpty);
+            this.Controls.Add(this.lbCountryEmpty);
+            this.Controls.Add(this.lbCityEmpty);
+            this.Controls.Add(this.lbNameEmpty);
+            this.Controls.Add(this.lbPhoneEmpty);
+            this.Controls.Add(this.lbEmailEmpty);
+            this.Controls.Add(this.lbPasswordEmpty);
+            this.Controls.Add(this.lbUsernameEmpty);
             this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.lbAddress);
             this.Controls.Add(this.txtAddress);
@@ -242,5 +363,14 @@
         private TextBox txtAddress;
         private Label lbAddress;
         private Button btnSignUp;
+        private Label lbUsernameEmpty;
+        private Label lbPasswordEmpty;
+        private Label lbEmailEmpty;
+        private Label lbPhoneEmpty;
+        private Label lbNameEmpty;
+        private Label lbCityEmpty;
+        private Label lbCountryEmpty;
+        private Label lbAddressEmpty;
+        private Label lbSignSuccess;
     }
 }

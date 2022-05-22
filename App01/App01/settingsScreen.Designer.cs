@@ -148,6 +148,7 @@
             this.chklbxShape.Name = "chklbxShape";
             this.chklbxShape.Size = new System.Drawing.Size(355, 58);
             this.chklbxShape.TabIndex = 0;
+            this.chklbxShape.SelectedIndexChanged += new System.EventHandler(this.chklbxShape_SelectedIndexChanged);
             // 
             // grpbxColor
             // 

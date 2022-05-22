@@ -20,7 +20,14 @@ namespace App01
         
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            if (Form1.adminFlag == true)
+            {
+                btnAdmin.Visible = true;
+            }
+            else
+            {
+                btnProfile.Visible = true;
+            }
         }
 
         private void settingsbutton_Click(object sender, EventArgs e) // settings button click event
@@ -40,6 +47,13 @@ namespace App01
             aboutScreen aboutUs = new aboutScreen();
             aboutUs.ShowDialog();
             aboutUs.TopMost = true;
+        }
+
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            ProfilePage pPage = new ProfilePage();
+            pPage.ShowDialog();
+            pPage.TopMost = true;
         }
     }
 }

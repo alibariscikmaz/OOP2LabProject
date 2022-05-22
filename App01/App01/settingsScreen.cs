@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,67 @@ namespace App01
         public settingsScreen()
         {
             InitializeComponent();
-            loadOptions();
+            SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+            string query = "SELECT US.Difficulty, US.xSize, US.ySize, US.squareShapeTicked, US.triangleShapeTicked, us.circleShapeTicked, US.redColorTicked, US.greenColorTicked, US.blueColorTicked " +
+                "FROM Users AS U, UserSettings AS US " +
+                "WHERE U.UID = US.UID AND @uid = US.UID; ";
+            SqlCommand cmd = new SqlCommand(query, cnn);
+            cmd.Parameters.Add("@uid", SqlDbType.Int, 100).Value = Form1.UID;
+            cmd.CommandText = query;
+            cnn.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                if (rdr["Difficulty"].ToString() == "Easy")
+                {
+                    rbtnEasy.Checked = true;
+                }
+                else if (rdr["Difficulty"].ToString() == "Normal")
+                {
+                    rbtnNormal.Checked = true;
+                }
+                else if (rdr["Difficulty"].ToString() == "Hard")
+                {
+                    rbtnHard.Checked = true;
+                }
+                else
+                {
+                    rbtnCustom.Checked = true;
+                }
+
+                if (rbtnCustom.Checked == true)
+                {
+                    nmrcudXAxis.Value = Int32.Parse(rdr["xSize"].ToString());
+                    nmrcudYAxis.Value = Int32.Parse(rdr["ySize"].ToString());
+                }
+
+                if (rdr["squareShapeTicked"].ToString() == "1")
+                {
+                    chklbxShape.SetItemChecked(0, true);
+                }
+                if (rdr["triangleShapeTicked"].ToString() == "1")
+                {
+                    chklbxShape.SetItemChecked(1, true);
+                }
+                if (rdr["circleShapeTicked"].ToString() == "1")
+                {
+                    chklbxShape.SetItemChecked(2, true);
+                }
+
+                if (rdr["redColorTicked"].ToString() == "1")
+                {
+                    chklbxColor.SetItemChecked(0, true);
+                }
+                if (rdr["greenColorTicked"].ToString() == "1")
+                {
+                    chklbxColor.SetItemChecked(1, true);
+                }
+                if (rdr["blueColorTicked"].ToString() == "1")
+                {
+                    chklbxColor.SetItemChecked(2, true);
+                }
+            }
+            cnn.Close();
         }
 
         private void settingsScreen_Load(object sender, EventArgs e)
@@ -26,150 +87,203 @@ namespace App01
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Create the xml file for saving settings
-            XmlTextWriter settingsConfig = new XmlTextWriter("settingsconfig.xml", Encoding.UTF8);
-            settingsConfig.Formatting = Formatting.Indented;
-            settingsConfig.WriteStartDocument();
-            settingsConfig.WriteStartElement("savedSettings");
+            SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+            SqlConnection cnn2 = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+            SqlConnection cnn3 = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
 
-            // Save difficulty settings to xml file
-            if (rbtnEasy.Checked){
-                settingsConfig.WriteElementString("difficulty", rbtnEasy.Text);
-                settingsConfig.WriteElementString("xAxis", "5");
-                settingsConfig.WriteElementString("yAxis", "5");
-            }
-            if (rbtnNormal.Checked){
-                settingsConfig.WriteElementString("difficulty", rbtnNormal.Text);
-                settingsConfig.WriteElementString("xAxis", "10");
-                settingsConfig.WriteElementString("yAxis", "10");
-            }
-            if (rbtnHard.Checked){
-                settingsConfig.WriteElementString("difficulty", rbtnHard.Text);
-                settingsConfig.WriteElementString("xAxis", "15");
-                settingsConfig.WriteElementString("yAxis", "15");
-            }
-            if (rbtnCustom.Checked){
-                settingsConfig.WriteElementString("difficulty", rbtnCustom.Text);
-                settingsConfig.WriteElementString("xAxis", nmrcudXAxis.Text);
-                settingsConfig.WriteElementString("yAxis", nmrcudYAxis.Text);
-            }
-
-            // Save each shape setting selected to xml file with checked shape count
-            settingsConfig.WriteElementString("shapeCount", chklbxShape.CheckedItems.Count.ToString());
-            for (int i = 0; i < chklbxShape.CheckedItems.Count; i++)
+            string query = "SELECT US.UID " +
+                "FROM Users AS U, UserSettings AS US " +
+                "WHERE U.UID = US.UID AND @uid = US.UID; ";
+            SqlCommand cmd = new SqlCommand(query, cnn);
+            cmd.Parameters.Add("@uid", SqlDbType.Int, 100).Value = Form1.UID;
+            cmd.CommandText = query;
+            cnn.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            // UPDATE
+            if (rdr.HasRows)
             {
-                settingsConfig.WriteElementString("checkedShape" + i, chklbxShape.CheckedItems[i].ToString());
-            }
-
-            // Save each color setting selected to xml file with checked color count
-            settingsConfig.WriteElementString("colorCount", chklbxColor.CheckedItems.Count.ToString());
-            for (int i = 0; i < chklbxColor.CheckedItems.Count; i++)
-            {
-                settingsConfig.WriteElementString("checkedColor" + i, chklbxColor.CheckedItems[i].ToString());
-            }
-
-            // Close xml file after writing
-            settingsConfig.WriteEndElement();
-            settingsConfig.Close();
-            lbSaveSuccessful.Visible = true;
-        }
-        private void loadOptions()
-        {
-            string currentpath = System.IO.Directory.GetCurrentDirectory();
-
-            if (!File.Exists(currentpath + "\\settingsconfig.xml"))
-            {
-                XmlTextWriter writer = new XmlTextWriter("settingsconfig.xml", Encoding.UTF8);
-                writer.Formatting = Formatting.Indented;
-                writer.WriteStartDocument();
-                writer.WriteStartElement("savedSettings");
-                writer.Close();
-            }
-
-            // Open the saved settings xml file
-            int checkedShapeCount = 0, checkedColorCount = 0;
-            XmlTextReader reader = new XmlTextReader("settingsconfig.xml");
-            
-            // Start reading
-            while(reader.Read())
-            {
-                // Read only elements
-                if(reader.NodeType == XmlNodeType.Element)
+                cnn.Close();
+                string query2 = "UPDATE UserSettings " +
+                    "SET Difficulty = @difficulty, xSize = @x, ySize = @y, squareShapeTicked = @square, triangleShapeTicked = @triangle, circleShapeTicked = @circle, redColorTicked = @red, greenColorTicked = @green, blueColorTicked = @blue " +
+                    "WHERE UID = @uid";
+                SqlCommand cmd2 = new SqlCommand(query2, cnn2);
+                cmd2.Parameters.Add("@uid", SqlDbType.Int, 100).Value = Form1.UID;
+                if (rbtnEasy.Checked == true)
                 {
-                    // If element name is difficulty, load the saved difficulty
-                    if (reader.Name == "difficulty")
-                    {
-                        string difficultyValue = reader.ReadString().ToString();
-                        if (difficultyValue == rbtnEasy.Text)
-                            rbtnEasy.Checked = true;
-                        if (difficultyValue == rbtnNormal.Text)
-                            rbtnNormal.Checked = true;
-                        if (difficultyValue == rbtnHard.Text)
-                            rbtnHard.Checked = true;
-                        if (difficultyValue == rbtnCustom.Text)
-                            rbtnCustom.Checked = true;
-                    }
-                    
-                    // If difficulty is custom, load the saved axis'
-                    if (reader.Name == "xAxis")
-                    {
-                        string xValue = reader.ReadString().ToString();
-                        if (rbtnCustom.Checked)
-                        {
-                           nmrcudXAxis.Text = xValue;
-                        }
-                    }
-
-                    if (reader.Name == "yAxis")
-                    {
-                        string yValue = reader.ReadString().ToString();
-                        if (rbtnCustom.Checked)
-                        {
-                            nmrcudYAxis.Text = yValue;
-                        }
-                    }
-
-                    // Get shapeCount for the loop of controlling checked shape elements
-                    if (reader.Name == "shapeCount") 
-                        checkedShapeCount = Int32.Parse(reader.ReadString().ToString());
-
-                    // Load checked shape elements in a loop
-                    for (int i = 0; i < checkedShapeCount; i++)
-                    {
-                        if (reader.Name == "checkedShape" + i)
-                        {
-                            string shapeName = reader.ReadString().ToString();
-                            if (shapeName == "Square")
-                                chklbxShape.SetItemChecked(0, true);
-                            if (shapeName == "Triangle")
-                                chklbxShape.SetItemChecked(1, true);
-                            if (shapeName == "Circle")
-                                chklbxShape.SetItemChecked(2, true);
-                        }
-                    }
-
-                    // Get colorCount for the loop of controlling checked color elements
-                    if (reader.Name == "colorCount")
-                        checkedColorCount = Int32.Parse(reader.ReadString().ToString());
-
-                    // Load checked color elements in a loop
-                    for (int i = 0; i < checkedColorCount; i++)
-                    {
-                        if (reader.Name == "checkedColor" + i)
-                        {
-                            string shapeName = reader.ReadString().ToString();
-                            if (shapeName == "Red")
-                                chklbxColor.SetItemChecked(0, true);
-                            if (shapeName == "Green")
-                                chklbxColor.SetItemChecked(1, true);
-                            if (shapeName == "Blue")
-                                chklbxColor.SetItemChecked(2, true);
-                        }
-                    }
+                    cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnEasy.Text;
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "5";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "5";
                 }
+                else if (rbtnNormal.Checked == true)
+                {
+                    cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnNormal.Text;
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "10";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "10";
+                }
+                else if (rbtnHard.Checked == true)
+                {
+                    cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnHard.Text;
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "15";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "15";
+                }
+                else if (rbtnCustom.Checked == true)
+                {
+                    cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnCustom.Text;
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = nmrcudXAxis.Value.ToString();
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = nmrcudYAxis.Value.ToString();
+                }
+
+                if (chklbxShape.GetItemChecked(0))
+                {
+                    cmd2.Parameters.Add("@square", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@square", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxShape.GetItemChecked(1))
+                {
+                    cmd2.Parameters.Add("@triangle", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@triangle", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxShape.GetItemChecked(2))
+                {
+                    cmd2.Parameters.Add("@circle", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@circle", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(0))
+                {
+                    cmd2.Parameters.Add("@red", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@red", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(1))
+                {
+                    cmd2.Parameters.Add("@green", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@green", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(2))
+                {
+                    cmd2.Parameters.Add("@blue", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd2.Parameters.Add("@blue", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                cnn2.Open();
+                cmd2.CommandText = query2;
+                cmd2.ExecuteNonQuery();
+                cnn2.Close();
             }
-            // Close xml file after reading
-            reader.Close();
+            //INSERT
+            else
+            {
+                string query3 = "INSERT INTO UserSettings (UID, Difficulty, xSize, ySize, squareShapeTicked, triangleShapeTicked, circleShapeTicked, redColorTicked, greenColorTicked, blueColorTicked) " +
+                    "VALUES (@uid, @difficulty, @x, @y, @square, @triangle, @circle, @red, @green, @blue);";
+                SqlCommand cmd3 = new SqlCommand(query3, cnn3);
+                cmd3.Parameters.Add("@uid", SqlDbType.Int, 100).Value = Form1.UID;
+                if (rbtnEasy.Checked == true)
+                {
+                    cmd3.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnEasy.Text;
+                    cmd3.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "5";
+                    cmd3.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "5";
+                }
+                else if (rbtnNormal.Checked == true)
+                {
+                    cmd3.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnNormal.Text;
+                    cmd3.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "10";
+                    cmd3.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "10";
+                }
+                else if (rbtnHard.Checked == true)
+                {
+                    cmd3.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnHard.Text;
+                    cmd3.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "15";
+                    cmd3.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "15";
+                }
+                else if (rbtnCustom.Checked == true)
+                {
+                    cmd3.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnCustom.Text;
+                    cmd3.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = nmrcudXAxis.Value.ToString();
+                    cmd3.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = nmrcudYAxis.Value.ToString();
+                }
+
+                if (chklbxShape.GetItemChecked(0))
+                {
+                    cmd3.Parameters.Add("@square", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@square", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxShape.GetItemChecked(1))
+                {
+                    cmd3.Parameters.Add("@triangle", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@triangle", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxShape.GetItemChecked(2))
+                {
+                    cmd3.Parameters.Add("@circle", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@circle", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(0))
+                {
+                    cmd3.Parameters.Add("@red", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@red", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(1))
+                {
+                    cmd3.Parameters.Add("@green", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@green", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                if (chklbxColor.GetItemChecked(2))
+                {
+                    cmd3.Parameters.Add("@blue", SqlDbType.NVarChar, 50).Value = "1";
+                }
+                else
+                {
+                    cmd3.Parameters.Add("@blue", SqlDbType.NVarChar, 50).Value = "0";
+                }
+
+                cnn3.Open();
+                cmd3.CommandText = query3;
+                cmd3.ExecuteNonQuery();
+                cnn3.Close();
+            }
+            lbSaveSuccessful.Visible = true;
         }
 
         private void rbtnCustom_CheckedChanged(object sender, EventArgs e)
@@ -187,6 +301,11 @@ namespace App01
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chklbxShape_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

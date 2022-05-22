@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,6 @@ namespace App01
         public signUp()
         {
             InitializeComponent();
-            createUsers();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -28,60 +28,130 @@ namespace App01
 
         private void btnSignUp_Click(object sender, EventArgs e)
         {
-            string currentpath = System.IO.Directory.GetCurrentDirectory();
-            int userCount = getUserCount();
+            // THIS BLOCK CHECKS IF THERE'S ANY EMPTY FIELDS IN THE FORM
+            bool emptyFieldFlag = false;
 
-                XDocument doc = XDocument.Load(currentpath + "\\userInfo.xml");
-            var newElement = new XElement("User",
-                 new XElement("username", txtUsername.Text),
-                 new XElement("password", toSHA256(txtPassword.Text)),
-                 new XElement("email", txtEmail.Text),
-                 new XElement("phone", txtPhoneNumber.Text),
-                 new XElement("name", txtNameSurname.Text),
-                 new XElement("city", txtCity.Text),
-                 new XElement("country", txtCountry.Text),
-                 new XElement("address", txtAddress.Text)
-                 );
-            doc.Element("Users").Add(newElement);
-            doc.Save(currentpath + "\\userInfo.xml");
-
-            StreamWriter txt = new StreamWriter(currentpath + "\\userCount.txt");
-            txt.WriteLine(userCount + 1);
-            txt.Close();
-        }
-
-        private int getUserCount()
-        {
-            int userCount = 0;
-            string currentpath = System.IO.Directory.GetCurrentDirectory();
-
-            if (!File.Exists(currentpath + "\\userCount.txt"))
+            if (txtUsername.Text == "")
             {
-                StreamWriter txt = new StreamWriter(currentpath + "\\userCount.txt");
-                txt.WriteLine(userCount);
-                txt.Close();
+                lbUsernameEmpty.Visible = true;
+                emptyFieldFlag = true;
             }
-
             else
             {
-                StreamReader txt = new StreamReader(currentpath + "\\userCount.txt");
-                userCount = Int32.Parse(txt.ReadLine());
-                txt.Close();
+                lbUsernameEmpty.Visible = false;
             }
 
-            return userCount;
-        }
-
-        private void createUsers()
-        {
-            string currentpath = System.IO.Directory.GetCurrentDirectory();
-            if (!File.Exists(currentpath + "\\userInfo.xml"))
+            if (txtPassword.Text == "")
             {
-                XDocument doc = new XDocument(
-                    new XElement("Users"));
-                doc.Save(currentpath + "\\userInfo.xml");
+                lbPasswordEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbPasswordEmpty.Visible = false;
+            }
+
+            if (txtEmail.Text == "")
+            {
+                lbEmailEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbEmailEmpty.Visible = false;
+            }
+
+            if (txtPhoneNumber.Text == "")
+            {
+                lbPhoneEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbPhoneEmpty.Visible = false;
+            }
+
+            if (txtNameSurname.Text == "")
+            {
+                lbNameEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbNameEmpty.Visible = false;
+            }
+
+            if (txtCity.Text == "")
+            {
+                lbCityEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbCityEmpty.Visible = false;
+            }
+
+            if (txtCountry.Text == "")
+            {
+                lbCountryEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbCountryEmpty.Visible = false;
+            }
+
+            if (txtAddress.Text == "")
+            {
+                lbAddressEmpty.Visible = true;
+                emptyFieldFlag = true;
+            }
+            else
+            {
+                lbAddressEmpty.Visible = false;
+            }
+
+            if (txtUsername.Text != "" && txtPassword.Text != "" && txtEmail.Text != "" && txtPhoneNumber.Text != "" && txtNameSurname.Text != "" && txtCity.Text != "" && txtCountry.Text != "" && txtAddress.Text != "") { emptyFieldFlag = false; }
+
+            // IF THERE'S NOT ANY EMPTY FIELDS, IT WRITES THE DATAS TO THE DB
+            if (emptyFieldFlag == false)
+            {
+                // This part connects the project with the MSSQL DB
+                string connectionString;
+                SqlConnection cnn;
+                connectionString = @"workstation id=OOPProjectDBGp34.mssql.somee.com;packet size=4096;user id=alibaris22_SQLLogin_1;pwd=rc4p9p3rkw;data source=OOPProjectDBGp34.mssql.somee.com;persist security info=False;initial catalog=OOPProjectDBGp34";
+                cnn = new SqlConnection(connectionString);
+
+                SqlCommand cmd;
+
+                string sql = "INSERT INTO Users (Username, Password, Email, Phone, NameSurname, City, Country, Address) " +
+                    "VALUES (@username, @password, @email, @phone, @namesurname, @city, @country, @address)";
+
+                // Open connection to insert data
+                cnn.Open();
+
+                cmd = new SqlCommand(sql, cnn);
+                // Turning data field texts into parameters for readability of queries and prevent SQL injection attacks.
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = txtUsername.Text.ToString();
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 300).Value = toSHA256(txtPassword.Text);
+                cmd.Parameters.Add("@email", SqlDbType.NVarChar, 50).Value = txtEmail.Text;
+                cmd.Parameters.Add("@phone", SqlDbType.NVarChar, 50).Value = txtPhoneNumber.Text;
+                cmd.Parameters.Add("@namesurname", SqlDbType.NVarChar, 50).Value = txtNameSurname.Text;
+                cmd.Parameters.Add("@city", SqlDbType.NVarChar, 50).Value = txtCity.Text;
+                cmd.Parameters.Add("@country", SqlDbType.NVarChar, 50).Value = txtCountry.Text;
+                cmd.Parameters.Add("@address", SqlDbType.NVarChar, 200).Value = txtAddress.Text;
+
+                // Execute SQL Query to insert new user into DB
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+
+                // Close connection after insertion
+                cnn.Close();
+
+                lbSignSuccess.Visible = true;
             }
         }
+
         public static string toSHA256(string s)
         {
             using var sha256 = SHA256.Create();
@@ -96,5 +166,19 @@ namespace App01
             
         }
 
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUsername_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
     }
 }
