@@ -55,5 +55,11 @@ namespace App01
             pPage.ShowDialog();
             pPage.TopMost = true;
         }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            gamescreen playScreen = new gamescreen();
+            playScreen.ShowDialog();
+        }
     }
 }
