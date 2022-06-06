@@ -60,7 +60,7 @@ namespace App01
 
         private void button1_Click(object sender, EventArgs e)
         {
-            checkmatch(tileSize, gridSizeX, gridSizeY);
+            checkmatch(gridSizeX, gridSizeY);
             drawgrid(tileSize,gridSizeX,gridSizeY);
         }
 
@@ -87,9 +87,10 @@ namespace App01
 
         private void generateThreeObjects(int gridSizeX, int gridSizeY)
         {
+            
             // Get unique locations for each 3 objects and put them into string array
             Random rng = new Random();
-            string randoma = "", randomb = "", randomc = "";
+            string randoma = "";
 
             string[] shapes = new string[5];
             int shapescount = 0;
@@ -191,54 +192,52 @@ namespace App01
                 colors[1] = "blue";
                 colorcount = 2;
             }
+            int emptycount = getemptycount(gridSizeX, gridSizeY);
 
-            int rngShape = rng.Next(0, shapescount);
-            int rngColor = rng.Next(0, colorcount);
-
-            randoma = colors[rngColor] + shapes[rngShape];
-
-            rngShape = rng.Next(0, shapescount);
-            rngColor = rng.Next(0, colorcount);
-
-            randomb = colors[rngColor] + shapes[rngShape];
-
-            rngShape = rng.Next(0, shapescount);
-            rngColor = rng.Next(0, colorcount);
-
-            randomc = colors[rngColor] + shapes[rngShape];
-
-            int a_x = rng.Next(0, gridSizeX);
-            int a_y = rng.Next(0, gridSizeY);
-
-            while (gameboardpanels[a_x, a_y] != "empty")
+            if (emptycount < 3)
             {
-                a_x = rng.Next(0, gridSizeX);
-                a_y = rng.Next(0, gridSizeY);
+                for (int i = 0; i < emptycount; i++)
+                {
+                    int rngShape = rng.Next(0, shapescount);
+                    int rngColor = rng.Next(0, colorcount);
+                    randoma = colors[rngColor] + shapes[rngShape];
+
+
+
+                    int a_x = rng.Next(0, gridSizeX);
+                    int a_y = rng.Next(0, gridSizeY);
+
+                    while (gameboardpanels[a_x, a_y] != "empty")
+                    {
+                        a_x = rng.Next(0, gridSizeX);
+                        a_y = rng.Next(0, gridSizeY);
+                    }
+
+                    gameboardpanels[a_x, a_y] = randoma;
+                }
             }
-
-            gameboardpanels[a_x, a_y] = randoma;
-
-            int b_x = rng.Next(0, gridSizeX);
-            int b_y = rng.Next(0, gridSizeY);
-
-            while (gameboardpanels[b_x, b_y] != "empty")
+            else
             {
-                b_x = rng.Next(0, gridSizeX);
-                b_y = rng.Next(0, gridSizeY);
+                for (int i = 0; i < 3; i++)
+                {
+                    int rngShape = rng.Next(0, shapescount);
+                    int rngColor = rng.Next(0, colorcount);
+                    randoma = colors[rngColor] + shapes[rngShape];
+
+
+
+                    int a_x = rng.Next(0, gridSizeX);
+                    int a_y = rng.Next(0, gridSizeY);
+
+                    while (gameboardpanels[a_x, a_y] != "empty")
+                    {
+                        a_x = rng.Next(0, gridSizeX);
+                        a_y = rng.Next(0, gridSizeY);
+                    }
+
+                    gameboardpanels[a_x, a_y] = randoma;
+                }
             }
-
-            gameboardpanels[b_x, b_y] = randomb;
-
-            int c_x = rng.Next(0, gridSizeX);
-            int c_y = rng.Next(0, gridSizeY);
-
-            while (gameboardpanels[c_x, c_y] != "empty")
-            {
-                c_x = rng.Next(0, gridSizeX);
-                c_y = rng.Next(0, gridSizeY);
-            }
-
-            gameboardpanels[c_x, c_y] = randomc;
 
             drawgrid(tileSize, gridSizeX, gridSizeY);
         }
@@ -275,6 +274,9 @@ namespace App01
             }
 
             drawgrid(tileSize, gridSizeX, gridSizeY);
+            checkmatch(gridSizeX,gridSizeY);
+            drawgrid(tileSize, gridSizeX, gridSizeY);
+
         }
 
         private void drawgrid(int tileSize, int gridSizeX, int gridSizeY)
@@ -310,7 +312,7 @@ namespace App01
                 }
             }
         }
-        private void checkmatch(int tileSize, int gridSizeX, int gridSizeY)
+        private void checkmatch(int gridSizeX, int gridSizeY)
         {
             string thisblock = "";
             for (var n = 0; n < gridSizeX; n++)
@@ -365,6 +367,19 @@ namespace App01
 
                 }
             }
+        }
+        private int getemptycount(int gridSizeX, int gridSizeY)
+        {
+            int emptycount=0;
+            for(int i=0; i<gridSizeX; i++)
+            {
+                for(int j=0; j<gridSizeY; j++)
+                {
+                    if(gameboardpanels[i,j] == "empty") emptycount++;
+                }
+            }
+            
+            return emptycount;
         }
     }
 }
