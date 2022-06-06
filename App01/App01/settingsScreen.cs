@@ -111,20 +111,20 @@ namespace App01
                 if (rbtnEasy.Checked == true)
                 {
                     cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnEasy.Text;
-                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "5";
-                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "5";
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "15";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "15";
                 }
                 else if (rbtnNormal.Checked == true)
                 {
                     cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnNormal.Text;
-                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "10";
-                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "10";
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "9";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "9";
                 }
                 else if (rbtnHard.Checked == true)
                 {
                     cmd2.Parameters.Add("@difficulty", SqlDbType.NVarChar, 50).Value = rbtnHard.Text;
-                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "15";
-                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "15";
+                    cmd2.Parameters.Add("@x", SqlDbType.NVarChar, 50).Value = "6";
+                    cmd2.Parameters.Add("@y", SqlDbType.NVarChar, 50).Value = "6";
                 }
                 else if (rbtnCustom.Checked == true)
                 {

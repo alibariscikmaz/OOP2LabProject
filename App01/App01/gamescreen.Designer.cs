@@ -28,25 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.startbttn = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // startbttn
-            // 
-            this.startbttn.Location = new System.Drawing.Point(592, 35);
-            this.startbttn.Name = "startbttn";
-            this.startbttn.Size = new System.Drawing.Size(126, 71);
-            this.startbttn.TabIndex = 0;
-            this.startbttn.Text = "Start";
-            this.startbttn.UseVisualStyleBackColor = true;
-            this.startbttn.Click += new System.EventHandler(this.startbttn_Click);
             // 
             // gamescreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.startbttn);
+            this.ClientSize = new System.Drawing.Size(1007, 687);
             this.Name = "gamescreen";
             this.Text = "gamescreen";
             this.Load += new System.EventHandler(this.gamescreen_Load);
@@ -55,7 +43,5 @@
         }
 
         #endregion
-
-        private Button startbttn;
     }
 }

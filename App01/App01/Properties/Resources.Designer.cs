@@ -73,6 +73,16 @@ namespace App01.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blueCircle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("blueCircle_Selected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap blueSquare {
             get {
                 object obj = ResourceManager.GetObject("blueSquare", resourceCulture);
@@ -83,9 +93,29 @@ namespace App01.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blueSquare_Selected {
+            get {
+                object obj = ResourceManager.GetObject("blueSquare_Selected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap blueTriangle {
             get {
                 object obj = ResourceManager.GetObject("blueTriangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blueTriangle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("blueTriangle_Selected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +143,29 @@ namespace App01.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap greenCircle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("greenCircle_Selected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap greenSquare {
             get {
                 object obj = ResourceManager.GetObject("greenSquare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap greenSquare_Selected {
+            get {
+                object obj = ResourceManager.GetObject("greenSquare_Selected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +183,29 @@ namespace App01.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap greenTriangle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("greenTriangle_Selected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap redCircle {
             get {
                 object obj = ResourceManager.GetObject("redCircle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redCircle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("redCircle_Selected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +223,29 @@ namespace App01.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap redSquare_Selected {
+            get {
+                object obj = ResourceManager.GetObject("redSquare_Selected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap redTriangle {
             get {
                 object obj = ResourceManager.GetObject("redTriangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redTriangle_Selected {
+            get {
+                object obj = ResourceManager.GetObject("redTriangle_Selected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
