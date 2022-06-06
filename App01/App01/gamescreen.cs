@@ -252,7 +252,7 @@ namespace App01
             int n = Int32.Parse(tokens[0]), m = Int32.Parse(tokens[1]);
 
             // first click
-            if (selectedFlag == false)
+            if (selectedFlag == false && gameboardpanels[n, m] != "empty")
             {
                 selectedType = gameboardpanels[n, m];
                 gameboardpanels[n, m] += "Selected";
@@ -261,16 +261,24 @@ namespace App01
                 selectedY = m;
             }
             // second click
-            else
+            else if (selectedFlag == true)
             {
                 // if the selected destination square is empty, move it, otherwise don't
-                if (gameboardpanels[n,m] == "empty")
+                if (gameboardpanels[n, m] == "empty")
                 {
                     gameboardpanels[selectedX, selectedY] = "empty";
                     gameboardpanels[n, m] = selectedType;
                     selectedFlag = false;
                     generateThreeObjects(gridSizeX, gridSizeY);
                 }
+                else if (gameboardpanels[n, m] == "blueCircleSelected" || gameboardpanels[n, m] == "blueSquareSelected" || gameboardpanels[n, m] == "blueTriangleSelected" || gameboardpanels[n, m] == "greenCircleSelected" || gameboardpanels[n, m] == "greenSquareSelected" || gameboardpanels[n, m] == "greenTriangleSelected" || gameboardpanels[n, m] == "redCircleSelected" || gameboardpanels[n, m] == "redSquareSelected" || gameboardpanels[n, m] == "redTriangleSelected")
+                {
+                    string temp="" ;
+                    temp = (gameboardpanels[n, m].Remove(gameboardpanels[n, m].Length - 8));
+                    gameboardpanels[n, m] = temp;
+                    selectedFlag = false;
+                }
+                
             }
 
             drawgrid(tileSize, gridSizeX, gridSizeY);
