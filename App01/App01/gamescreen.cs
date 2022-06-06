@@ -58,6 +58,12 @@ namespace App01
             cnn.Close();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            checkmatch(tileSize, gridSizeX, gridSizeY);
+            drawgrid(tileSize,gridSizeX,gridSizeY);
+        }
+
         private void gamescreen_Load(object sender, EventArgs e)
         {
             // initialize the game grid
@@ -301,6 +307,62 @@ namespace App01
                     int py = this.ClientSize.Height / 2 - (tileSize * gridSizeY / 2);
                     drawingPanels[n, m].Location = new Point(px + tileSize * n, py + tileSize * m);
                     Controls.Add(drawingPanels[n, m]);
+                }
+            }
+        }
+        private void checkmatch(int tileSize, int gridSizeX, int gridSizeY)
+        {
+            string thisblock = "";
+            for (var n = 0; n < gridSizeX; n++)
+            {
+                for (var m = 0; m < gridSizeY; m++)
+                {
+                    thisblock=gameboardpanels[n, m];
+                    //checkright
+                    if (n + 4 < gridSizeX)
+                    {
+                        if(thisblock ==gameboardpanels[n+1, m])
+                        {
+                           if (thisblock ==gameboardpanels[n+2, m])
+                            {
+                                if(thisblock==gameboardpanels[n+3, m])
+                                {
+                                    if(thisblock ==gameboardpanels[n+4, m])
+                                    {
+                                        gameboardpanels[n + 4, m] = "empty";
+                                        gameboardpanels[n + 3, m] = "empty";
+                                        gameboardpanels[n + 2, m] = "empty";
+                                        gameboardpanels[n + 1, m] = "empty";
+                                        gameboardpanels[n, m] = "empty";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //checkbottom
+                    if (m + 4 < gridSizeX)
+                    {
+                        if (thisblock == gameboardpanels[n, m+1])
+                        {
+                            if (thisblock == gameboardpanels[n, m+2])
+                            {
+                                if (thisblock == gameboardpanels[n, m+3])
+                                {
+                                    if (thisblock == gameboardpanels[n, m+4])
+                                    {
+                                        gameboardpanels[n, m + 4] = "empty";
+                                        gameboardpanels[n, m + 3] = "empty";
+                                        gameboardpanels[n, m + 2] = "empty";
+                                        gameboardpanels[n, m + 1] = "empty";
+                                        gameboardpanels[n, m] = "empty";
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+
                 }
             }
         }
