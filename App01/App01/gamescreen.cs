@@ -17,6 +17,8 @@ namespace App01
         int gridSizeX;
         int gridSizeY;
 
+        bool isCircleTicked = false, isSquareTicked = false, isTriangleTicked = false, isRedColorTicked = false, isGreenColorTicked = false, isBlueColorTicked = false;
+
         private Panel[,] drawingPanels;
         Panel selectedPanel = new Panel();
         string[,] gameboardpanels;
@@ -29,9 +31,9 @@ namespace App01
         {
             InitializeComponent();
             
-            // Get grid size options from DB
+            // Get grid size, shape and color options from DB
             SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
-            string query = "SELECT US.xSize, US.ySize " +
+            string query = "SELECT US.xSize, US.ySize, US.squareShapeTicked, US.triangleShapeTicked, US.circleShapeTicked, US.redColorTicked, US.greenColorTicked, US.blueColorTicked " +
                 "FROM Users AS U, UserSettings AS US " +
                 "WHERE U.UID = US.UID AND @uid = US.UID;";
             SqlCommand cmd = new SqlCommand(query, cnn);
@@ -43,9 +45,17 @@ namespace App01
             {
                 gridSizeX = Int32.Parse(rdr["xSize"].ToString());
                 gridSizeY = Int32.Parse(rdr["ySize"].ToString());
+
+                if (Int32.Parse(rdr["squareShapeTicked"].ToString()) == 1) isSquareTicked = true;
+                if (Int32.Parse(rdr["triangleShapeTicked"].ToString()) == 1) isTriangleTicked = true;
+                if (Int32.Parse(rdr["circleShapeTicked"].ToString()) == 1) isCircleTicked = true;
+
+                if (Int32.Parse(rdr["redColorTicked"].ToString()) == 1) isRedColorTicked = true;
+                if (Int32.Parse(rdr["greenColorTicked"].ToString()) == 1) isGreenColorTicked = true;
+                if (Int32.Parse(rdr["blueColorTicked"].ToString()) == 1) isBlueColorTicked = true;
+
             }
             cnn.Close();
-
         }
 
         private void gamescreen_Load(object sender, EventArgs e)
@@ -75,6 +85,122 @@ namespace App01
             Random rng = new Random();
             string randoma = "", randomb = "", randomc = "";
 
+            string[] shapes = new string[5];
+            int shapescount = 0;
+            string[] colors = new string[5];
+            int colorcount = 0;
+
+            // SHAPES
+            if (!isCircleTicked && !isSquareTicked && !isTriangleTicked || isCircleTicked && isSquareTicked && isTriangleTicked)
+            {
+                shapes[0] = "Circle";
+                shapes[1] = "Square";
+                shapes[2] = "Triangle";
+                shapescount = 3;
+            }
+
+            if (isCircleTicked && !isSquareTicked && !isTriangleTicked)
+            {
+                shapes[0] = "Circle";
+                shapescount = 1;
+            }
+
+            if (!isCircleTicked && isSquareTicked && !isTriangleTicked)
+            {
+                shapes[0] = "Square";
+                shapescount = 1;
+            }
+
+            if (!isCircleTicked && !isSquareTicked && isTriangleTicked)
+            {
+                shapes[0] = "Triangle";
+                shapescount = 1;
+            }
+
+            if (isCircleTicked && isSquareTicked && !isTriangleTicked)
+            {
+                shapes[0] = "Circle";
+                shapes[1] = "Square";
+                shapescount = 2;
+            }
+
+            if (isCircleTicked && !isSquareTicked && isTriangleTicked)
+            {
+                shapes[0] = "Circle";
+                shapes[1] = "Triangle";
+                shapescount = 2;
+            }
+
+            if (!isCircleTicked && isSquareTicked && isTriangleTicked)
+            {
+                shapes[0] = "Square";
+                shapes[1] = "Triangle";
+                shapescount = 2;
+            }
+
+            // COLORS
+            if (!isRedColorTicked && !isGreenColorTicked && !isBlueColorTicked || isRedColorTicked && isGreenColorTicked && isBlueColorTicked)
+            {
+                colors[0] = "red";
+                colors[1] = "green";
+                colors[2] = "blue";
+                colorcount = 3;
+            }
+
+            if (isRedColorTicked && !isGreenColorTicked && !isBlueColorTicked)
+            {
+                colors[0] = "red";
+                colorcount = 1;
+            }
+
+            if (!isRedColorTicked && isGreenColorTicked && !isBlueColorTicked)
+            {
+                colors[0] = "green";
+                colorcount = 1;
+            }
+
+            if (!isRedColorTicked && !isGreenColorTicked && isBlueColorTicked)
+            {
+                colors[0] = "blue";
+                colorcount = 1;
+            }
+
+            if (isRedColorTicked && isGreenColorTicked && !isBlueColorTicked)
+            {
+                colors[0] = "red";
+                colors[1] = "green";
+                colorcount = 2;
+            }
+
+            if (isRedColorTicked && !isGreenColorTicked && isBlueColorTicked)
+            {
+                colors[0] = "red";
+                colors[1] = "blue";
+                colorcount = 2;
+            }
+
+            if (!isRedColorTicked && isGreenColorTicked && isBlueColorTicked)
+            {
+                colors[0] = "green";
+                colors[1] = "blue";
+                colorcount = 2;
+            }
+
+            int rngShape = rng.Next(0, shapescount);
+            int rngColor = rng.Next(0, colorcount);
+
+            randoma = colors[rngColor] + shapes[rngShape];
+
+            rngShape = rng.Next(0, shapescount);
+            rngColor = rng.Next(0, colorcount);
+
+            randomb = colors[rngColor] + shapes[rngShape];
+
+            rngShape = rng.Next(0, shapescount);
+            rngColor = rng.Next(0, colorcount);
+
+            randomc = colors[rngColor] + shapes[rngShape];
+
             int a_x = rng.Next(0, gridSizeX);
             int a_y = rng.Next(0, gridSizeY);
 
@@ -83,17 +209,6 @@ namespace App01
                 a_x = rng.Next(0, gridSizeX);
                 a_y = rng.Next(0, gridSizeY);
             }
-
-            int rngcolorshape = rng.Next(0, 9);
-            if (rngcolorshape == 0) randoma = "blueCircle";
-            if (rngcolorshape == 1) randoma = "blueSquare";
-            if (rngcolorshape == 2) randoma = "blueTriangle";
-            if (rngcolorshape == 3) randoma = "greenCircle";
-            if (rngcolorshape == 4) randoma = "greenSquare";
-            if (rngcolorshape == 5) randoma = "greenTriangle";
-            if (rngcolorshape == 6) randoma = "redCircle";
-            if (rngcolorshape == 7) randoma = "redSquare";
-            if (rngcolorshape == 8) randoma = "redTriangle";
 
             gameboardpanels[a_x, a_y] = randoma;
 
@@ -106,17 +221,6 @@ namespace App01
                 b_y = rng.Next(0, gridSizeY);
             }
 
-            rngcolorshape = rng.Next(0, 9);
-            if (rngcolorshape == 0) randomb = "blueCircle";
-            if (rngcolorshape == 1) randomb = "blueSquare";
-            if (rngcolorshape == 2) randomb = "blueTriangle";
-            if (rngcolorshape == 3) randomb = "greenCircle";
-            if (rngcolorshape == 4) randomb = "greenSquare";
-            if (rngcolorshape == 5) randomb = "greenTriangle";
-            if (rngcolorshape == 6) randomb = "redCircle";
-            if (rngcolorshape == 7) randomb = "redSquare";
-            if (rngcolorshape == 8) randomb = "redTriangle";
-
             gameboardpanels[b_x, b_y] = randomb;
 
             int c_x = rng.Next(0, gridSizeX);
@@ -127,17 +231,6 @@ namespace App01
                 c_x = rng.Next(0, gridSizeX);
                 c_y = rng.Next(0, gridSizeY);
             }
-
-            rngcolorshape = rng.Next(0, 9);
-            if (rngcolorshape == 0) randomc = "blueCircle";
-            if (rngcolorshape == 1) randomc = "blueSquare";
-            if (rngcolorshape == 2) randomc = "blueTriangle";
-            if (rngcolorshape == 3) randomc = "greenCircle";
-            if (rngcolorshape == 4) randomc = "greenSquare";
-            if (rngcolorshape == 5) randomc = "greenTriangle";
-            if (rngcolorshape == 6) randomc = "redCircle";
-            if (rngcolorshape == 7) randomc = "redSquare";
-            if (rngcolorshape == 8) randomc = "redTriangle";
 
             gameboardpanels[c_x, c_y] = randomc;
 
