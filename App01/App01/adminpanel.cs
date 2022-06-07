@@ -134,6 +134,7 @@ namespace App01
 
                 SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
                 SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = selectUserBox.SelectedItem.ToString();
                 cmd.Parameters.Add("@password", SqlDbType.NVarChar, 300).Value = Form1.toSHA256(txtPw.Text);
                 cmd.Parameters.Add("@email", SqlDbType.NVarChar, 50).Value = txtEmail.Text;
                 cmd.Parameters.Add("@phone", SqlDbType.NVarChar, 50).Value = txtPhone.Text;
@@ -153,26 +154,31 @@ namespace App01
 
         private void deleteBttn_Click(object sender, EventArgs e)
         {
-            SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
-            string query = "UPDATE Users SET Users.IsDeleted = 1 WHERE @username = Users.Username";
-            SqlCommand cmd = new SqlCommand(query, cnn);
-            cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = selectUserBox.SelectedItem.ToString();
-            cmd.CommandText = query;
-            cnn.Open();
-            cmd.ExecuteNonQuery();
-            cnn.Close();
+            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete", MessageBoxButtons.YesNo);
+            if(dialogResult == DialogResult.Yes)
+            {
+                SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+                string query = "UPDATE Users SET Users.IsDeleted = 1 WHERE @username = Users.Username";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = selectUserBox.SelectedItem.ToString();
+                cmd.CommandText = query;
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+                cnn.Close();
 
-            txtUsername.Text = "";
-            txtPw.Text = "";
-            txtEmail.Text = "";
-            txtPhone.Text = "";
-            txtName.Text = "";
-            txtCity.Text = "";
-            txtCountry.Text = "";
-            txtAddress.Text = "";
+                txtUsername.Text = "";
+                txtPw.Text = "";
+                txtEmail.Text = "";
+                txtPhone.Text = "";
+                txtName.Text = "";
+                txtCity.Text = "";
+                txtCountry.Text = "";
+                txtAddress.Text = "";
 
-            selectUserBox.Text = "";
-            selectUserBox.Items.Remove(selectUserBox.SelectedItem);
+                selectUserBox.Text = "";
+                selectUserBox.Items.Remove(selectUserBox.SelectedItem);
+            }
+            
         }
 
         private void addUserbttn_Click(object sender, EventArgs e)
