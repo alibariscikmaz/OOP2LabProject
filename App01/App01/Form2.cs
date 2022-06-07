@@ -61,5 +61,12 @@ namespace App01
             gamescreen playScreen = new gamescreen();
             playScreen.ShowDialog();
         }
+
+        private void bttnHelp_Click(object sender, EventArgs e)
+        {
+            help help = new help();
+            help.ShowDialog();
+            help.TopMost = true;
+        }
     }
 }

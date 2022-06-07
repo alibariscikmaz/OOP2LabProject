@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace App01
 {
@@ -76,12 +77,6 @@ namespace App01
             if (gridSizeX == 9 && gridSizeY == 9) reward = 3;
             if (gridSizeX == 6 && gridSizeY == 6) reward = 5;
             else reward = 2;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            checkmatch(gridSizeX, gridSizeY);
-            drawgrid(tileSize,gridSizeX,gridSizeY);
         }
 
         private void gamescreen_Load(object sender, EventArgs e)
@@ -268,9 +263,6 @@ namespace App01
             drawgrid(tileSize, gridSizeX, gridSizeY);
         }
 
-        private void startbttn_Click(object sender, EventArgs e)
-        {
-        }
         private void drawingPanels_Click(object sender, EventArgs e)
         {
             Panel thisPanel = sender as Panel;
@@ -294,6 +286,8 @@ namespace App01
                 {
                     gameboardpanels[selectedX, selectedY] = "empty";
                     gameboardpanels[n, m] = selectedType;
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.move);
+                    player.Play();
                     selectedFlag = false;
                     generateThreeObjects(gridSizeX, gridSizeY);
                 }
@@ -310,7 +304,10 @@ namespace App01
                 // GAME OVER SCREEN
                 if (emptyCount == 0)
                 {
+                    SoundPlayer player = new SoundPlayer(Properties.Resources.gameover);
+                    player.Play();
                     MessageBox.Show("GAME OVER!");
+                    
                     if (score > latestHighScore)
                     {
                         SqlConnection cnn2 = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
@@ -395,6 +392,8 @@ namespace App01
                                         gameboardpanels[n + 1, m] = "empty";
                                         gameboardpanels[n, m] = "empty";
                                         score += reward;
+                                        SoundPlayer player = new SoundPlayer(Properties.Resources.getmatcheffect);
+                                        player.Play();
                                     }
                                 }
                             }
@@ -417,6 +416,8 @@ namespace App01
                                         gameboardpanels[n, m + 1] = "empty";
                                         gameboardpanels[n, m] = "empty";
                                         score += reward;
+                                        SoundPlayer player = new SoundPlayer(Properties.Resources.getmatcheffect);
+                                        player.Play();
                                     }
                                 }
                             }
