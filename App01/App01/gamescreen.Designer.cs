@@ -28,34 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.lbHighest = new System.Windows.Forms.Label();
+            this.btnLeaderBoard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // lblScore
             // 
-            this.button1.Location = new System.Drawing.Point(825, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(131, 54);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "checkmatch";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.lblScore.AutoSize = true;
+            this.lblScore.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblScore.Location = new System.Drawing.Point(12, 59);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(121, 50);
+            this.lblScore.TabIndex = 0;
+            this.lblScore.Text = "Score:";
+            // 
+            // lbHighest
+            // 
+            this.lbHighest.AutoSize = true;
+            this.lbHighest.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbHighest.Location = new System.Drawing.Point(12, 9);
+            this.lbHighest.Name = "lbHighest";
+            this.lbHighest.Size = new System.Drawing.Size(156, 50);
+            this.lbHighest.TabIndex = 1;
+            this.lbHighest.Text = "Highest:";
+            // 
+            // btnLeaderBoard
+            // 
+            this.btnLeaderBoard.Location = new System.Drawing.Point(928, 12);
+            this.btnLeaderBoard.Name = "btnLeaderBoard";
+            this.btnLeaderBoard.Size = new System.Drawing.Size(67, 57);
+            this.btnLeaderBoard.TabIndex = 2;
+            this.btnLeaderBoard.Text = "Leader Board";
+            this.btnLeaderBoard.UseVisualStyleBackColor = true;
+            this.btnLeaderBoard.Click += new System.EventHandler(this.btnLeaderBoard_Click);
             // 
             // gamescreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1007, 687);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLeaderBoard);
+            this.Controls.Add(this.lbHighest);
+            this.Controls.Add(this.lblScore);
             this.Name = "gamescreen";
             this.Text = "gamescreen";
             this.Load += new System.EventHandler(this.gamescreen_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private Button button1;
+        private Label lblScore;
+        private Label lbHighest;
+        private Button btnLeaderBoard;
     }
 }

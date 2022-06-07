@@ -16,6 +16,8 @@ namespace App01
         // Define grid sizes
         int gridSizeX;
         int gridSizeY;
+        int score = 0;
+        int reward;
 
         bool isCircleTicked = false, isSquareTicked = false, isTriangleTicked = false, isRedColorTicked = false, isGreenColorTicked = false, isBlueColorTicked = false;
 
@@ -26,6 +28,8 @@ namespace App01
         bool selectedFlag = false;
         int selectedX, selectedY;
         string selectedType;
+        int latestHighScore;
+        int allPeopleHighestScore;
 
         public gamescreen()
         {
@@ -33,7 +37,7 @@ namespace App01
             
             // Get grid size, shape and color options from DB
             SqlConnection cnn = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
-            string query = "SELECT US.xSize, US.ySize, US.squareShapeTicked, US.triangleShapeTicked, US.circleShapeTicked, US.redColorTicked, US.greenColorTicked, US.blueColorTicked " +
+            string query = "SELECT US.xSize, US.ySize, US.squareShapeTicked, US.triangleShapeTicked, US.circleShapeTicked, US.redColorTicked, US.greenColorTicked, US.blueColorTicked, US.highestScore " +
                 "FROM Users AS U, UserSettings AS US " +
                 "WHERE U.UID = US.UID AND @uid = US.UID;";
             SqlCommand cmd = new SqlCommand(query, cnn);
@@ -45,6 +49,7 @@ namespace App01
             {
                 gridSizeX = Int32.Parse(rdr["xSize"].ToString());
                 gridSizeY = Int32.Parse(rdr["ySize"].ToString());
+                latestHighScore = Int32.Parse(rdr["highestScore"].ToString());
 
                 if (Int32.Parse(rdr["squareShapeTicked"].ToString()) == 1) isSquareTicked = true;
                 if (Int32.Parse(rdr["triangleShapeTicked"].ToString()) == 1) isTriangleTicked = true;
@@ -56,6 +61,21 @@ namespace App01
 
             }
             cnn.Close();
+
+            SqlConnection cnn2 = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+            string query2 = "SELECT MAX(highestScore) " +
+                "FROM UserSettings;";
+            SqlCommand cmd2 = new SqlCommand(query2, cnn2);
+            cmd2.CommandText = query2;
+            cnn2.Open();
+            allPeopleHighestScore = Int32.Parse(cmd2.ExecuteScalar().ToString());
+            lbHighest.Text += allPeopleHighestScore.ToString();
+            cnn2.Close();
+
+            if (gridSizeX == 15 && gridSizeY == 15) reward = 1;
+            if (gridSizeX == 9 && gridSizeY == 9) reward = 3;
+            if (gridSizeX == 6 && gridSizeY == 6) reward = 5;
+            else reward = 2;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -83,6 +103,12 @@ namespace App01
             }
 
             generateThreeObjects(gridSizeX, gridSizeY);
+        }
+
+        private void btnLeaderBoard_Click(object sender, EventArgs e)
+        {
+            LeaderBoard lb = new LeaderBoard();
+            lb.ShowDialog();
         }
 
         private void generateThreeObjects(int gridSizeX, int gridSizeY)
@@ -278,7 +304,29 @@ namespace App01
                     gameboardpanels[n, m] = temp;
                     selectedFlag = false;
                 }
-                
+
+                int emptyCount = getemptycount(gridSizeX, gridSizeY);
+
+                // GAME OVER SCREEN
+                if (emptyCount == 0)
+                {
+                    MessageBox.Show("GAME OVER!");
+                    if (score > latestHighScore)
+                    {
+                        SqlConnection cnn2 = new SqlConnection(@"workstation id = OOPProjectDBGp34.mssql.somee.com; packet size = 4096; user id = alibaris22_SQLLogin_1; pwd = rc4p9p3rkw; data source = OOPProjectDBGp34.mssql.somee.com; persist security info = False; initial catalog = OOPProjectDBGp34");
+                        string query2 = "UPDATE UserSettings " +
+                            "SET highestScore = @score " +
+                            "WHERE UID = @uid";
+                        SqlCommand cmd2 = new SqlCommand(query2, cnn2);
+                        cmd2.Parameters.Add("@score", SqlDbType.Int, 100).Value = score;
+                        cmd2.Parameters.Add("@uid", SqlDbType.Int, 100).Value = Form1.UID;
+                        cnn2.Open();
+                        cmd2.CommandText = query2;
+                        cmd2.ExecuteNonQuery();
+                        cnn2.Close();
+                    }
+                }
+
             }
 
             drawgrid(tileSize, gridSizeX, gridSizeY);
@@ -319,6 +367,8 @@ namespace App01
                     Controls.Add(drawingPanels[n, m]);
                 }
             }
+            lblScore.Text = "Score: " + score;
+
         }
         private void checkmatch(int gridSizeX, int gridSizeY)
         {
@@ -331,7 +381,7 @@ namespace App01
                     //checkright
                     if (n + 4 < gridSizeX)
                     {
-                        if(thisblock ==gameboardpanels[n+1, m])
+                        if(thisblock ==gameboardpanels[n+1, m] && thisblock != "empty")
                         {
                            if (thisblock ==gameboardpanels[n+2, m])
                             {
@@ -344,6 +394,7 @@ namespace App01
                                         gameboardpanels[n + 2, m] = "empty";
                                         gameboardpanels[n + 1, m] = "empty";
                                         gameboardpanels[n, m] = "empty";
+                                        score += reward;
                                     }
                                 }
                             }
@@ -352,7 +403,7 @@ namespace App01
                     //checkbottom
                     if (m + 4 < gridSizeX)
                     {
-                        if (thisblock == gameboardpanels[n, m+1])
+                        if (thisblock == gameboardpanels[n, m+1] && thisblock != "empty")
                         {
                             if (thisblock == gameboardpanels[n, m+2])
                             {
@@ -365,6 +416,7 @@ namespace App01
                                         gameboardpanels[n, m + 2] = "empty";
                                         gameboardpanels[n, m + 1] = "empty";
                                         gameboardpanels[n, m] = "empty";
+                                        score += reward;
                                     }
                                 }
                             }
