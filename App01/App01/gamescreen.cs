@@ -299,6 +299,7 @@ namespace App01
                     selectedFlag = false;
                 }
 
+                checkmatch(gridSizeX, gridSizeY);
                 int emptyCount = getemptycount(gridSizeX, gridSizeY);
 
                 // GAME OVER SCREEN
